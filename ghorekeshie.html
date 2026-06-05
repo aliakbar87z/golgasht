@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرعه‌کشیه | با مدیریت خانم قیصری</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v33.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Vazir', 'Tahoma', 'Segoe UI', sans-serif;
+            background: #1a0b2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #ffbe0b, #fb5607);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            z-index: -3;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: -2;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,200,0,0.5);
+            animation: floatUp linear infinite;
+            bottom: -50px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(720deg) scale(1.5); opacity: 0; }
+        }
+
+        .stickers-container {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+        }
+        .sticker {
+            position: absolute;
+            font-size: 36px;
+            animation: dance 3s ease-in-out infinite;
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(255,255,255,0.7);
+            user-select: none;
+        }
+        @keyframes dance {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-20px) rotate(10deg) scale(1.15); }
+            50% { transform: translateY(0) rotate(0deg) scale(1); }
+            75% { transform: translateY(-20px) rotate(-10deg) scale(1.15); }
+            100% { transform: translateY(0) rotate(0deg) scale(1); }
+        }
+
+        .gate, .main-app {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.2);
+            max-width: 550px; width: 100%;
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            position: relative; z-index: 1;
+        }
+
+        .manager-header {
+            position: absolute; top: -40px; left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, #ffd700, #ffaa00);
+            color: #1a0b2e;
+            padding: 8px 35px; border-radius: 50px;
+            font-weight: 900; font-size: 1.1em;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 25px rgba(255,215,0,0.5);
+            white-space: nowrap; border: 2px solid #fff;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; text-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+        .typewriter-text {
+            display: inline-block; white-space: nowrap; overflow: hidden;
+            animation: typing 4s steps(30, end), blink-caret 0.7s step-end infinite;
+            border-left: 3px solid #1a0b2e;
+        }
+        @keyframes typing {
+            from { width: 0; } to { width: 100%; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; } 50% { border-color: #1a0b2e; }
+        }
+
+        .warning-card {
+            background: rgba(0,0,0,0.25); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,215,0,0.5); border-radius: 20px;
+            padding: 18px 15px; margin: 10px 0 5px 0;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            animation: fadeInUp 0.9s ease-out;
+            position: relative; overflow: hidden;
+            box-shadow: 0 0 30px rgba(255,215,0,0.3);
+        }
+        .warning-card::before {
+            content: ""; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2.5s infinite; pointer-events: none;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; } 100% { background-position: 200% 0; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .warning-icon { font-size: 28px; animation: pulse 2s infinite; color: #ffd700; filter: drop-shadow(0 0 10px #ffaa00); }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.25); opacity: 1; } 100% { transform: scale(1); opacity: 0.9; }
+        }
+        .warning-text { font-size: 14px; line-height: 2; text-align: justify; color: #fff; text-shadow: 0 0 8px rgba(0,0,0,0.5); }
+        .warning-text strong { color: #ffd700; font-weight: 900; }
+
+        .gate h2 { color: #fff; margin-bottom: 8px; margin-top: 25px; }
+        .channels { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+        .channel-btn {
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 16px;
+            padding: 15px; text-decoration: none; color: #fff; font-weight: bold; transition: 0.3s;
+        }
+        .channel-btn:hover { background: rgba(255,255,255,0.35); border-color: #ffd700; transform: scale(1.02); }
+        .channel-name { font-size: 16px; }
+        .join-badge { background: #ffd700; color: #1a0b2e; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+
+        .input-group {
+            display: flex; flex-direction: column; gap: 10px;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border-radius: 12px; padding: 15px; margin: 10px 0;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        .input-group label { font-size: 14px; color: #ffd700; }
+        .input-group input {
+            width: 100%; padding: 12px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.2); color: #fff;
+            font-family: inherit; font-size: 16px; text-align: center;
+        }
+        .input-row {
+            display: flex; gap: 10px;
+        }
+        .input-row input {
+            flex: 1; padding: 12px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.2); color: #fff;
+            font-family: inherit; font-size: 16px; text-align: center;
+        }
+        .input-row button {
+            background: #ffaa00; color: #1a0b2e; border: none;
+            border-radius: 8px; padding: 12px 18px; font-weight: bold; cursor: pointer;
+        }
+        #channelCodeMessage {
+            margin-top: 8px; font-size: 16px; font-weight: bold;
+            color: #00ff88; animation: fadeInUp 0.5s ease-out;
+        }
+
+        .code-input-group {
+            display: flex; flex-direction: column; gap: 8px;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border-radius: 12px; padding: 12px; margin: 15px 0;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        .code-input-group label { font-size: 14px; color: #ffd700; }
+        #verifyCode {
+            width: 100%; padding: 12px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.2); color: #fff;
+            font-family: inherit; font-size: 16px; text-align: center; letter-spacing: 3px;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(to right, #ffd700, #ffaa00); color: #1a0b2e;
+            border: none; border-radius: 16px; padding: 18px; font-size: 18px; font-weight: bold;
+            width: 100%; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(255,215,0,0.4);
+        }
+        .confirm-btn:hover { background: linear-gradient(to right, #ffe55c, #ffb703); transform: translateY(-3px); }
+        .hidden { display: none !important; }
+
+        .header {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); color: #ffd700;
+            padding: 22px 18px; text-align: center; font-size: 1.7em; font-weight: 900;
+            letter-spacing: 1px; border-radius: 20px; margin: 0 0 20px 0;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header .sub { font-size: 0.6em; color: #eee; font-weight: normal; text-shadow: none; }
+        .content { display: flex; flex-direction: column; gap: 15px; text-align: right; color: #fff; }
+
+        .names-display {
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 14px; padding: 15px; font-size: 14px; line-height: 2.2;
+            max-height: 200px; overflow-y: auto; text-align: right; direction: rtl;
+            color: #ddd; word-break: break-word;
+        }
+        .file-zone { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .file-label {
+            background: rgba(255,255,255,0.2); color: white; padding: 10px 18px;
+            border-radius: 12px; font-size: 14px; cursor: pointer; transition: 0.2s;
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3);
+        }
+        .file-label:hover { background: rgba(255,255,255,0.4); }
+        #fileInput { display: none; }
+        .names-area {
+            width: 100%; height: 150px; border: 2px dashed rgba(255,255,255,0.5);
+            border-radius: 14px; padding: 12px; font-family: inherit; font-size: 14px;
+            resize: vertical; direction: ltr; text-align: right;
+            background: rgba(0,0,0,0.3); color: #fff;
+        }
+        .datetime-box {
+            display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.1); padding: 12px; border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+        .datetime-box label { font-weight: bold; font-size: 14px; }
+        .datetime-box input {
+            flex: 1; padding: 10px; border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 10px; font-family: inherit; background: rgba(0,0,0,0.5); color: #fff;
+        }
+        .countdown {
+            background: rgba(255,215,0,0.2); color: #ffd700; padding: 12px;
+            border-radius: 14px; text-align: center; font-size: 1.5em; font-weight: bold;
+            backdrop-filter: blur(5px);
+        }
+        .buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn {
+            flex: 1 1 auto; padding: 12px 15px; border: none; border-radius: 12px;
+            font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s;
+            text-align: center; backdrop-filter: blur(5px);
+        }
+        .btn-primary { background: linear-gradient(to right, #ffd700, #ffaa00); color: #1a0b2e; }
+        .btn-primary:hover { background: linear-gradient(to right, #ffe55c, #ffb703); }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.4); }
+        .admin-btn {
+            background: transparent; border: 1px dashed rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.6); font-size: 13px; padding: 8px 15px;
+            border-radius: 20px; cursor: pointer; margin-top: 5px; transition: 0.3s;
+        }
+        .admin-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+        .winner-card {
+            background: rgba(255,215,0,0.15); border: 2px solid #ffd700;
+            border-radius: 20px; padding: 25px; text-align: center; font-size: 1.8em;
+            font-weight: 900; color: #ffd700; min-height: 80px;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s; word-break: break-word; backdrop-filter: blur(10px);
+            text-shadow: 0 0 15px #ffaa00;
+        }
+        @keyframes winPop {
+            0% { transform: scale(0.7); opacity: 0; }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .winner-animate { animation: winPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        .rolling-names {
+            font-size: 1.5em; font-weight: bold;
+            animation: rollNames 0.1s infinite;
+        }
+        @keyframes rollNames {
+            0% { opacity: 0.3; transform: translateY(-5px); }
+            50% { opacity: 1; transform: translateY(5px); }
+            100% { opacity: 0.3; transform: translateY(-5px); }
+        }
+
+        .stats-table {
+            width: 100%; border-collapse: collapse;
+            background: rgba(0,0,0,0.3); border-radius: 10px;
+            overflow: hidden; font-size: 13px;
+        }
+        .stats-table th {
+            background: rgba(255,215,0,0.3); padding: 8px; color: #fff;
+        }
+        .stats-table td {
+            padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ddd;
+        }
+        .info-text {
+            font-size: 13px; color: #ffd700; margin-top: 5px; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="stickers-container" id="stickersContainer"></div>
+<div class="particles" id="particlesContainer"></div>
+
+<!-- صفحه گیت -->
+<div id="gatePage" class="gate">
+    <div class="manager-header">
+        <span class="typewriter-text">✨ با مدیریت خانم قیصری ✨</span>
+    </div>
+    <h2>🔐 ورود به قرعه‌کشی</h2>
+    
+    <div class="warning-card">
+        <div class="warning-icon">⚠️</div>
+        <div class="warning-text">
+            <strong>توجه:</strong> شرکت در این قرعه‌کشی <strong>منوط به عضویت در هر سه کانال</strong> می‌باشد.
+            کد ورود <strong>فقط در کانال‌های زیر منتشر می‌شود</strong>. پس از عضویت، کد را دریافت کرده و در کادر پایین وارد کنید.
+        </div>
+    </div>
+
+    <div class="channels">
+        <a href="https://eitaa.com/Lavazemtahreirgoldasht" target="_blank" class="channel-btn">
+            <span class="channel-name">📚 نوشت‌افزار گلدشت</span>
+            <span class="join-badge">عضویت</span>
+        </a>
+        <a href="https://eitaa.com/hambaziiii" target="_blank" class="channel-btn">
+            <span class="channel-name">🧸 اسباب‌بازی گلدشت</span>
+            <span class="join-badge">عضویت</span>
+        </a>
+        <a href="https://eitaa.com/Gallerymahak402" target="_blank" class="channel-btn">
+            <span class="channel-name">🖼 گالری ماهک</span>
+            <span class="join-badge">عضویت</span>
+        </a>
+    </div>
+
+    <!-- نام و نام خانوادگی -->
+    <div class="input-group">
+        <label>👤 نام و نام خانوادگی:</label>
+        <input type="text" id="fullName" placeholder="مثال: علی اکبری">
+    </div>
+
+    <!-- شماره موبایل -->
+    <div class="input-group">
+        <label>📱 شماره موبایل:</label>
+        <div class="input-row">
+            <input type="tel" id="phoneNumber" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
+            <button onclick="showCodeMessage()">دریافت کد</button>
+        </div>
+        <div id="channelCodeMessage"></div>
+    </div>
+
+    <!-- کد تأیید -->
+    <div class="code-input-group">
+        <label>🔑 کد ورود (از کانال‌ها دریافت کنید):</label>
+        <input type="text" id="verifyCode" placeholder="کد عضویت">
+    </div>
+
+    <p class="info-text">📌 اطلاعات شما تنها برای احراز هویت و آمار مدیریت ذخیره می‌شود. لیست شرکت‌کنندگان در قرعه‌کشی منحصراً توسط مدیریت تعیین می‌گردد.</p>
+
+    <button class="confirm-btn" onclick="enterApp()">✅ ورود به قرعه‌کشی</button>
+</div>
+
+<!-- صفحه اصلی -->
+<div id="mainApp" class="main-app hidden">
+    <div class="manager-header">
+        <span class="typewriter-text">✨ با مدیریت خانم قیصری ✨</span>
+    </div>
+    <div class="header">
+        🎯 قرعه‌کشیه
+        <span class="sub">نوشت‌افزار گلدشت | اسباب‌بازی گلدشت | گالری ماهک</span>
+    </div>
+    <div class="content">
+        <!-- نمای عمومی -->
+        <div id="publicView">
+            <div class="names-display" id="publicNamesList">اسامی هنوز وارد نشده‌اند.</div>
+            <div class="countdown" id="countdownDisplay">⏳ هنوز تنظیم نشده</div>
+            <div class="winner-card" id="winnerDisplay">🎁 برنده اینجا نمایش داده می‌شود</div>
+            <button class="admin-btn" onclick="promptAdminPassword()">🔑 ورود مدیر</button>
+        </div>
+
+        <!-- نمای مدیریت -->
+        <div id="adminView" class="hidden">
+            <div style="display:flex; gap:10px; align-items:center; margin-bottom:5px;">
+                <label style="font-size:14px;">🎟 حالت امتیازی (نام - تعداد):</label>
+                <input type="checkbox" id="weightedMode" onchange="toggleWeightedMode()">
+            </div>
+            <div class="file-zone">
+                <label for="fileInput" class="file-label">📁 آپلود فایل اعضا (txt)</label>
+                <input type="file" id="fileInput" accept=".txt, .csv">
+                <button class="btn btn-secondary" onclick="clearNames()">🗑 پاک کردن لیست</button>
+            </div>
+            <textarea id="namesList" class="names-area" placeholder="هر خط یک اسم (در حالت امتیازی: نام - تعداد)"></textarea>
+            <div class="datetime-box">
+                <label>⏰ زمان قرعه‌کشی خودکار:</label>
+                <input type="datetime-local" id="drawTime">
+                <button class="btn btn-primary" onclick="saveSettings()">💾 ذخیره زمان</button>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; background:rgba(255,255,255,0.1); padding:10px; border-radius:10px;">
+                <label style="font-size:14px;">🔐 کد عضویت (در کانال‌ها اعلام شود):</label>
+                <input type="text" id="memberCodeInput" style="flex:1; padding:8px; background:rgba(0,0,0,0.5); color:#fff; border:1px solid #ffd700; border-radius:8px;">
+                <button class="btn btn-primary" onclick="updateMemberCode()" style="flex:0;">ذخیره کد</button>
+            </div>
+            
+            <!-- بخش آمار کاربران -->
+            <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:15px; margin-top:10px;">
+                <h3 style="color:#ffd700; margin-bottom:10px;">📊 آمار مراجعه‌کنندگان (ثبت‌نام گیت)</h3>
+                <div id="userStats" style="max-height:300px; overflow-y:auto;">
+                    <p style="color:#aaa;">هنوز کسی وارد نشده است.</p>
+                </div>
+                <div style="margin-top:10px; font-size:14px; color:#ffd700;" id="totalUsers"></div>
+            </div>
+
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="manualDraw()">🎲 قرعه‌کشی دستی</button>
+                <button class="btn btn-secondary" onclick="resetAll()">🔄 بازنشانی کامل</button>
+            </div>
+            <button class="admin-btn" onclick="exitAdmin()">🚪 خروج از مدیریت</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- کلیدهای ذخیره‌سازی ----------
+    const MEMBER_CODE_KEY = 'member_code';
+    const STORAGE_KEY = 'ghorekeshie_golgasht';
+    const USERS_KEY = 'gate_visitors';
+
+    // ---------- کد عضویت ----------
+    const DEFAULT_MEMBER_CODE = "GOLDSHT402";
+    function getMemberCode() {
+        return localStorage.getItem(MEMBER_CODE_KEY) || DEFAULT_MEMBER_CODE;
+    }
+    function setMemberCode(code) {
+        localStorage.setItem(MEMBER_CODE_KEY, code);
+    }
+
+    // ---------- رمز مدیریت ----------
+    const ADMIN_PASSWORD = "ali.akbar.87.z";
+
+    // ---------- ذرات نورانی ----------
+    function createParticles() {
+        const c = document.getElementById('particlesContainer');
+        for (let i=0; i<40; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const s = Math.random()*8+4;
+            p.style.width = s+'px'; p.style.height = s+'px';
+            p.style.left = Math.random()*100+'%';
+            p.style.animationDuration = (Math.random()*10+8)+'s';
+            p.style.animationDelay = Math.random()*10+'s';
+            p.style.backgroundColor = `rgba(255,255,255,${Math.random()*0.6+0.2})`;
+            c.appendChild(p);
+        }
+    }
+    createParticles();
+
+    // ---------- استیکرها ----------
+    function createStickers() {
+        const emojis = ['✏️','📎','📚','🖍️','🎨','📐','✂️','🖊️','🧸','🎮','🪀','🎲','🧩','🪁','🎯','🎪','💍','👑','👜','👓','🎀','💎','⌚','🌟'];
+        const c = document.getElementById('stickersContainer');
+        for (let i=0; i<25; i++) {
+            const s = document.createElement('div');
+            s.className = 'sticker';
+            s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+            s.style.left = Math.random()*100+'%';
+            s.style.top = Math.random()*100+'%';
+            s.style.fontSize = (Math.random()*20+25)+'px';
+            s.style.animationDuration = (Math.random()*3+2.5)+'s';
+            s.style.animationDelay = Math.random()*5+'s';
+            s.style.opacity = Math.random()*0.4+0.5;
+            c.appendChild(s);
+        }
+    }
+    createStickers();
+
+    // ---------- مدیریت کاربران گیت (فقط برای آمار) ----------
+    function getVisitors() {
+        const data = localStorage.getItem(USERS_KEY);
+        return data ? JSON.parse(data) : [];
+    }
+    function addVisitor(name, phone) {
+        const visitors = getVisitors();
+        if (!visitors.find(v => v.phone === phone)) {
+            visitors.push({ name, phone, time: new Date().toLocaleString('fa-IR') });
+            localStorage.setItem(USERS_KEY, JSON.stringify(visitors));
+        }
+    }
+    function updateVisitorStats() {
+        const visitors = getVisitors();
+        const container = document.getElementById('userStats');
+        const totalEl = document.getElementById('totalUsers');
+        totalEl.textContent = `👥 تعداد کل مراجعه‌کنندگان: ${visitors.length} نفر`;
+        if (visitors.length === 0) {
+            container.innerHTML = '<p style="color:#aaa;">هنوز کسی وارد نشده است.</p>';
+            return;
+        }
+        let html = `<table class="stats-table"><thead><tr><th>#</th><th>نام و نام خانوادگی</th><th>شماره موبایل</th><th>زمان مراجعه</th></tr></thead><tbody>`;
+        visitors.forEach((v, idx) => {
+            html += `<tr><td>${idx+1}</td><td>${v.name}</td><td>${v.phone}</td><td>${v.time}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    }
+
+    // ---------- نمایش پیام راهنما ----------
+    function showCodeMessage() {
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const name = document.getElementById('fullName').value.trim();
+        if (!name) {
+            alert('لطفاً ابتدا نام و نام خانوادگی خود را وارد کنید.');
+            return;
+        }
+        if (phone.length < 10) {
+            alert('لطفاً یک شماره موبایل معتبر وارد کنید.');
+            return;
+        }
+        document.getElementById('channelCodeMessage').innerHTML = 
+            '📢 کد ورود <strong>فقط در کانال‌های ما</strong> منتشر شده است.<br>لطفاً عضو شوید و کد را از پست سنجاق‌شده کانال‌ها بردارید.';
+    }
+
+    // ---------- ورود از گیت ----------
+    function enterApp() {
+        const fullName = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const enteredCode = document.getElementById('verifyCode').value.trim();
+        const correctCode = getMemberCode();
+
+        if (!fullName) {
+            alert('❌ لطفاً نام و نام خانوادگی خود را وارد کنید.');
+            return;
+        }
+        if (phone.length < 10) {
+            alert('❌ لطفاً شماره موبایل معتبر وارد کنید.');
+            return;
+        }
+        if (enteredCode !== correctCode) {
+            alert('❌ کد وارد شده اشتباه است. لطفاً در کانال‌ها عضو شوید و کد صحیح را دریافت کنید.');
+            return;
+        }
+
+        addVisitor(fullName, phone);
+
+        document.getElementById('gatePage').classList.add('hidden');
+        document.getElementById('mainApp').classList.remove('hidden');
+        loadAllData();
+    }
+
+    // ---------- داده‌های قرعه‌کشی ----------
+    function getSettings() {
+        const s = localStorage.getItem(STORAGE_KEY);
+        if (s) return JSON.parse(s);
+        return { names: '', drawTime: '', winner: '', weighted: false };
+    }
+    function setSettings(obj) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+    }
+
+    const namesEl = document.getElementById('namesList');
+    const drawTimeEl = document.getElementById('drawTime');
+    const countdownEl = document.getElementById('countdownDisplay');
+    const winnerEl = document.getElementById('winnerDisplay');
+    const publicNamesEl = document.getElementById('publicNamesList');
+    const fileInput = document.getElementById('fileInput');
+    const weightedCheck = document.getElementById('weightedMode');
+    const memberCodeInput = document.getElementById('memberCodeInput');
+    let autoTimer = null;
+
+    function toggleWeightedMode() {
+        const s = getSettings();
+        s.weighted = weightedCheck.checked;
+        setSettings(s);
+    }
+
+    function parseNamesForDraw() {
+        const raw = namesEl.value.split(/[\r\n]+/).map(l => l.trim()).filter(l => l);
+        const weighted = weightedCheck.checked;
+        let entries = [];
+        if (weighted) {
+            for (const line of raw) {
+                const parts = line.split('-').map(p => p.trim());
+                const name = parts[0];
+                const count = parseInt(parts[1]) || 1;
+                for (let i=0; i<count; i++) entries.push(name);
+            }
+        } else {
+            entries = raw;
+        }
+        return entries;
+    }
+
+    function updatePublicNamesDisplay() {
+        const s = getSettings();
+        if (!namesEl.value.trim()) {
+            publicNamesEl.textContent = 'اسامی هنوز وارد نشده‌اند.';
+            return;
+        }
+        if (s.weighted) {
+            const arr = namesEl.value.split(/[\r\n]+/).filter(l => l.trim());
+            publicNamesEl.innerHTML = arr.map(l => {
+                const p = l.split('-');
+                return `<span>${p[0]} (${p[1] || 1} بلیط)</span>`;
+            }).join('، ');
+        } else {
+            const arr = namesEl.value.split(/[\r\n]+/).filter(l => l.trim());
+            publicNamesEl.textContent = arr.join('، ');
+        }
+    }
+
+    function loadAllData() {
+        const s = getSettings();
+        namesEl.value = s.names || '';
+        drawTimeEl.value = s.drawTime || '';
+        weightedCheck.checked = s.weighted || false;
+        memberCodeInput.value = getMemberCode();
+        if (s.winner) {
+            winnerEl.textContent = '🎉 ' + s.winner + ' 🎉';
+        } else {
+            winnerEl.textContent = '🎁 برنده اینجا نمایش داده می‌شود';
+        }
+        updatePublicNamesDisplay();
+        updateCountdown();
+        updateVisitorStats();
+    }
+
+    function saveNamesToStorage() {
+        const s = getSettings();
+        s.names = namesEl.value;
+        s.weighted = weightedCheck.checked;
+        setSettings(s);
+        updatePublicNamesDisplay();
+    }
+
+    function saveSettings() {
+        saveNamesToStorage();
+        const s = getSettings();
+        s.drawTime = drawTimeEl.value;
+        setSettings(s);
+        updateCountdown();
+        alert('✅ زمان قرعه‌کشی ذخیره شد.');
+    }
+
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const lines = ev.target.result.split(/[\r\n]+/).map(l => l.trim()).filter(l => l);
+            const cur = namesEl.value.trim();
+            const curNames = cur ? cur.split(/[\r\n]+/).filter(l => l.trim()) : [];
+            const merged = [...curNames, ...lines];
+            namesEl.value = [...new Set(merged)].join('\n');
+            saveNamesToStorage();
+        };
+        reader.readAsText(file, 'UTF-8');
+    });
+
+    namesEl.addEventListener('input', saveNamesToStorage);
+    weightedCheck.addEventListener('change', saveNamesToStorage);
+
+    function clearNames() {
+        if (confirm('همه اسامی پاک شوند؟')) {
+            namesEl.value = '';
+            saveNamesToStorage();
+        }
+    }
+
+    // ---------- افکت صوتی و خواندن برنده ----------
+    function playCelebrationSound() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            // صدای شیپور جشن (چند نت با فرکانس بالا)
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'square';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime + i * 0.2);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.2 + 0.4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + i * 0.2);
+                osc.stop(audioCtx.currentTime + i * 0.2 + 0.4);
+            });
+        } catch (e) {
+            // AudioContext not supported, skip sound
+        }
+    }
+
+    function speakWinner(name) {
+        try {
+            const utterance = new SpeechSynthesisUtterance('برنده قرعه‌کشی: ' + name);
+            utterance.lang = 'fa-IR';
+            utterance.rate = 0.8;
+            utterance.pitch = 1.2;
+            window.speechSynthesis.speak(utterance);
+        } catch (e) {
+            // speech synthesis not supported
+        }
+    }
+
+    function drawWinner() {
+        const entries = parseNamesForDraw();
+        if (entries.length === 0) {
+            winnerEl.textContent = '⚠️ لیست اسامی خالی است!';
+            return null;
+        }
+        winnerEl.textContent = '🎰 در حال قرعه‌کشی...';
+        winnerEl.classList.add('rolling-names');
+        let counter = 0;
+        const interval = setInterval(() => {
+            const randomName = entries[Math.floor(Math.random() * entries.length)];
+            winnerEl.textContent = randomName;
+            counter++;
+            if (counter >= 15) {
+                clearInterval(interval);
+                const finalIdx = Math.floor(Math.random() * entries.length);
+                const winner = entries[finalIdx];
+                winnerEl.textContent = '🎉 ' + winner + ' 🎉';
+                winnerEl.classList.remove('rolling-names');
+                winnerEl.classList.add('winner-animate');
+                setTimeout(() => winnerEl.classList.remove('winner-animate'), 700);
+                const s = getSettings();
+                s.winner = winner;
+                setSettings(s);
+
+                // پخش صدا و خواندن نام برنده
+                playCelebrationSound();
+                speakWinner(winner);
+            }
+        }, 100);
+        return null;
+    }
+
+    function manualDraw() {
+        drawWinner();
+    }
+
+    function updateCountdown() {
+        if (autoTimer) clearInterval(autoTimer);
+        const dt = drawTimeEl.value;
+        if (!dt) {
+            countdownEl.textContent = '⏳ زمان قرعه‌کشی تنظیم نشده';
+            return;
+        }
+        const drawDate = new Date(dt);
+        function tick() {
+            const diff = drawDate - new Date();
+            if (diff <= 0) {
+                countdownEl.textContent = '🎯 زمان قرعه‌کشی فرا رسید!';
+                const s = getSettings();
+                if (!s.winner) drawWinner();
+                clearInterval(autoTimer);
+                autoTimer = null;
+                return;
+            }
+            const ts = Math.floor(diff/1000);
+            const d = Math.floor(ts/86400);
+            const h = Math.floor((ts%86400)/3600);
+            const m = Math.floor((ts%3600)/60);
+            const sec = ts%60;
+            let txt = '⏳ ';
+            if (d>0) txt += d + ' روز ';
+            txt += `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')} مانده`;
+            countdownEl.textContent = txt;
+        }
+        tick();
+        autoTimer = setInterval(tick, 1000);
+    }
+
+    drawTimeEl.addEventListener('change', saveSettings);
+
+    function resetAll() {
+        if (confirm('همه تنظیمات، اسامی قرعه‌کشی و لیست مراجعه‌کنندگان پاک شوند؟')) {
+            namesEl.value = '';
+            drawTimeEl.value = '';
+            setSettings({ names:'', drawTime:'', winner:'', weighted:false });
+            localStorage.removeItem(USERS_KEY);
+            winnerEl.textContent = '🎁 برنده اینجا نمایش داده می‌شود';
+            updatePublicNamesDisplay();
+            updateCountdown();
+            updateVisitorStats();
+            weightedCheck.checked = false;
+        }
+    }
+
+    // ---------- مدیریت کد عضویت ----------
+    function updateMemberCode() {
+        const newCode = memberCodeInput.value.trim();
+        if (!newCode) {
+            alert('کد نمی‌تواند خالی باشد.');
+            return;
+        }
+        setMemberCode(newCode);
+        alert('✅ کد جدید ذخیره شد. این کد را در کانال‌ها اعلام کنید.');
+    }
+
+    // ---------- ورود/خروج مدیریت ----------
+    function promptAdminPassword() {
+        const pw = prompt('لطفاً رمز مدیریت را وارد کنید:');
+        if (pw === ADMIN_PASSWORD) {
+            document.getElementById('publicView').classList.add('hidden');
+            document.getElementById('adminView').classList.remove('hidden');
+            loadAllData();
+        } else if (pw !== null) {
+            alert('❌ رمز اشتباه است!');
+        }
+    }
+
+    function exitAdmin() {
+        document.getElementById('adminView').classList.add('hidden');
+        document.getElementById('publicView').classList.remove('hidden');
+        saveNamesToStorage();
+        loadAllData();
+    }
+
+    window.addEventListener('load', () => {
+        document.getElementById('fullName').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('channelCodeMessage').innerHTML = '';
+        document.getElementById('verifyCode').value = '';
+    });
+</script>
+</body>
+</html>
