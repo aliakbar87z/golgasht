@@ -1,4 +1,4 @@
-[ghorekeshie.html](https://github.com/user-attachments/files/28667588/ghorekeshie.html)
+[ghorekeshie2.html](https://github.com/user-attachments/files/28667807/ghorekeshie2.html)
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
